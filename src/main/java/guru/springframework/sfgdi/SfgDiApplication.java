@@ -8,32 +8,35 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
+import java.util.logging.Logger;
+
 @SpringBootApplication
 public class SfgDiApplication {
+
+    private static final Logger log = Logger.getLogger(SfgDiApplication.class.getName());
 
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(SfgDiApplication.class, args);
 
         MyController myController = (MyController) ctx.getBean("myController");
+        String helloString = myController.sayHello();
+        log.info("--- Primary bean");
+        log.info(helloString);
 
-        String greeting = myController.sayHello();
-
-        System.out.println(greeting);
-
-        System.out.println("--- Property controller");
+        log.info("--- Property controller");
 
         PropertyInjectedController propertyInjectedController = (PropertyInjectedController) ctx.getBean("propertyInjectedController");
-        System.out.println(propertyInjectedController.getGreeting());
+        log.info(propertyInjectedController.getGreeting());
 
-        System.out.println("--- Setter controller");
+        log.info("--- Setter controller");
 
         SetterInjectedController setterInjectedController = (SetterInjectedController) ctx.getBean("setterInjectedController");
-        System.out.println(setterInjectedController.getGreeting());
+        log.info(setterInjectedController.getGreeting());
 
-        System.out.println("--- Constructor controller");
+        log.info("--- Constructor controller");
 
         ConstructorInjectedController constructorInjectedController = (ConstructorInjectedController) ctx.getBean("constructorInjectedController");
-        System.out.println(constructorInjectedController.getGreeting());
+        log.info(constructorInjectedController.getGreeting());
     }
 
 }
